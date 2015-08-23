@@ -29,10 +29,14 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**/*'
   s.resource_bundles = {
-    'FlightKit' => ['Pod/Assets/*.png']
+    'FlightKit' => ['Pod/Assets/*']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'KeychainAccess'
+  s.dependency 'Alamofire'
+  s.dependency 'SwiftyJSON'
+  s.dependency 'RZVibrantButton'
+  s.dependency 'SCLAlertView'
 end

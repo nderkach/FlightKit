@@ -1,0 +1,101 @@
+{
+    "OTA_AirLowFareSearchRQ": {
+        "OriginDestinationInformation": [
+                                         {
+                                         "DepartureDates": {
+                                         "dayOrDaysRange": [
+                                                            {
+                                                            "DaysRange": {
+                                                            "FromDate": "2015-02-01",
+                                                            "ToDate": "2015-02-28",
+                                                            }
+                                                            }
+                                                            ]
+                                         },
+                                         "DestinationLocation": {
+                                         "LocationCode": "DFW"
+                                         },
+                                         "OriginLocation": {
+                                         "LocationCode": "SFO"
+                                         },
+                                         "RPH": 1
+                                         },
+                                         {
+                                         "DepartureDates": {
+                                         "lengthOfStayOrLengthOfStayRange": [
+                                                                             {
+                                                                             "LengthOfStayRange": {
+                                                                             "MaxDays": 3,
+                                                                             "MinDays": 1
+                                                                             }
+                                                                             }
+                                                                             ]
+                                         },
+                                         "DestinationLocation": {
+                                         "LocationCode": "SFO"
+                                         },
+                                         "OriginLocation": {
+                                         "LocationCode": "DFW"
+                                         },
+                                         "RPH": 2
+                                         }
+                                         ],
+        "POS": {
+            "Source": [
+                       {
+                       "RequestorID": {
+                       "CompanyName": {
+                       "Code": "TN"
+                       },
+                       "ID": "REQ.ID",
+                       "Type": "0.AAA.X"
+                       }
+                       }
+                       ]
+        },
+        "TPA_Extensions": {
+            "IntelliSellTransaction": {
+                "RequestType": {
+                    "Name": "ADC1000"
+                }
+            }
+        },
+        "TravelPreferences": {
+            "TPA_Extensions": {
+                "NumTrips": {
+                    "Number": 200
+                }
+            }
+        },
+        "TravelerInfoSummary": {
+            "AirTravelerAvail": [
+                                 {
+                                 "PassengerTypeQuantity": [
+                                                           {
+                                                           "Code": "ADT",
+                                                           "Quantity": 1
+                                                           }
+                                                           ]
+                                 }
+                                 ],
+            "PriceRequestInformation": {
+                "TPA_Extensions": {
+                    "Priority": {
+                        "DirectFlights": {
+                            "Priority": 2
+                        },
+                        "Price": {
+                            "Priority": 1
+                        },
+                        "Time": {
+                            "Priority": 3
+                        },
+                        "Vendor": {
+                            "Priority": 4
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "FlightKit",
+  "version": "0.1.0",
+  "summary": "A short description of FlightKit.",
+  "description": "An optional longer description of FlightKit\n\n* Markdown format.\n* Don't worry about the indent, we strip it!",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/FlightKit",
+  "license": "MIT",
+  "authors": {
+    "Nikolay Derkach": "nderk@me.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/FlightKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "FlightKit": [
+      "Pod/Assets/*"
+    ]
+  },
+  "dependencies": {
+    "KeychainAccess": [
+
+    ],
+    "Alamofire": [
+
+    ],
+    "SwiftyJSON": [
+
+    ],
+    "RZVibrantButton": [
+
+    ],
+    "SCLAlertView": [
+
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FlightView" customModule="FlightKit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jG8-Jw-l6k" userLabel="Background">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <visualEffectView opaque="NO" alpha="0.80000000000000027" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9d5-kf-iIk">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eJ2-8p-njF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BmL-SQ-OU1">
+                                <rect key="frame" x="8" y="8" width="584" height="584"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fly to Paris" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVh-yV-igN">
+                                        <rect key="frame" x="9" y="0.0" width="566" height="555"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starting from $0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIh-iv-N3b">
+                                        <rect key="frame" x="14" y="563" width="556" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="4FU-cd-bON"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="YVh-yV-igN" firstAttribute="centerX" secondItem="cIh-iv-N3b" secondAttribute="centerX" constant="0.5" id="7SX-hf-ofp"/>
+                                    <constraint firstAttribute="trailing" secondItem="cIh-iv-N3b" secondAttribute="trailing" constant="14" id="PSo-nx-C82"/>
+                                    <constraint firstItem="cIh-iv-N3b" firstAttribute="leading" secondItem="BmL-SQ-OU1" secondAttribute="leading" constant="14" id="S6t-sd-Qh0"/>
+                                    <constraint firstItem="cIh-iv-N3b" firstAttribute="top" secondItem="YVh-yV-igN" secondAttribute="bottom" constant="8" id="UnJ-YK-rcj"/>
+                                    <constraint firstAttribute="trailing" secondItem="cIh-iv-N3b" secondAttribute="trailing" constant="15" id="dYN-EF-Ywr"/>
+                                    <constraint firstItem="YVh-yV-igN" firstAttribute="top" secondItem="BmL-SQ-OU1" secondAttribute="top" id="e8P-J5-DfG"/>
+                                    <constraint firstItem="YVh-yV-igN" firstAttribute="leading" secondItem="BmL-SQ-OU1" secondAttribute="leading" constant="9" id="nf0-2U-HiR"/>
+                                    <constraint firstItem="cIh-iv-N3b" firstAttribute="leading" secondItem="BmL-SQ-OU1" secondAttribute="leading" constant="14" id="oGr-AP-YBL"/>
+                                    <constraint firstAttribute="trailing" secondItem="YVh-yV-igN" secondAttribute="trailing" constant="9" id="vvj-70-SXB"/>
+                                    <constraint firstAttribute="bottom" secondItem="cIh-iv-N3b" secondAttribute="bottom" id="w0f-oB-bvw"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7SX-hf-ofp"/>
+                                        <exclude reference="S6t-sd-Qh0"/>
+                                        <exclude reference="dYN-EF-Ywr"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="BmL-SQ-OU1" firstAttribute="leading" secondItem="eJ2-8p-njF" secondAttribute="leading" constant="8" id="ASi-oI-r5F"/>
+                            <constraint firstAttribute="bottom" secondItem="BmL-SQ-OU1" secondAttribute="bottom" constant="397" id="FFG-Zt-eh3"/>
+                            <constraint firstAttribute="trailing" secondItem="BmL-SQ-OU1" secondAttribute="trailing" constant="8" id="IpI-67-iwu"/>
+                            <constraint firstAttribute="centerY" secondItem="BmL-SQ-OU1" secondAttribute="centerY" id="L6w-7N-XCI"/>
+                            <constraint firstAttribute="bottom" secondItem="BmL-SQ-OU1" secondAttribute="bottom" constant="8" id="NUK-xg-h6E"/>
+                            <constraint firstAttribute="trailing" secondItem="BmL-SQ-OU1" secondAttribute="trailing" constant="240" id="XDs-wv-tdF"/>
+                            <constraint firstItem="BmL-SQ-OU1" firstAttribute="top" secondItem="eJ2-8p-njF" secondAttribute="top" constant="135" id="gFt-2s-Max"/>
+                            <constraint firstItem="BmL-SQ-OU1" firstAttribute="leading" secondItem="eJ2-8p-njF" secondAttribute="leading" constant="198" id="kVV-4x-Jgl"/>
+                            <constraint firstItem="BmL-SQ-OU1" firstAttribute="top" secondItem="eJ2-8p-njF" secondAttribute="top" constant="8" id="qTZ-KP-ykV"/>
+                            <constraint firstAttribute="centerX" secondItem="BmL-SQ-OU1" secondAttribute="centerX" id="qW3-rl-jk3"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FFG-Zt-eh3"/>
+                                <exclude reference="L6w-7N-XCI"/>
+                                <exclude reference="XDs-wv-tdF"/>
+                                <exclude reference="gFt-2s-Max"/>
+                                <exclude reference="kVV-4x-Jgl"/>
+                                <exclude reference="qW3-rl-jk3"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Yh-8V-816">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="buttonPushed:" destination="iN0-l3-epB" eventType="touchUpInside" id="U8i-gA-360"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="9d5-kf-iIk" secondAttribute="bottom" id="10H-gB-7Mo"/>
+                <constraint firstAttribute="bottom" secondItem="1Yh-8V-816" secondAttribute="bottom" id="8nB-FW-rL6"/>
+                <constraint firstItem="1Yh-8V-816" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8vN-Kw-53A"/>
+                <constraint firstAttribute="trailing" secondItem="1Yh-8V-816" secondAttribute="trailing" id="RCo-Bx-zap"/>
+                <constraint firstItem="1Yh-8V-816" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sat-Pq-3JM"/>
+                <constraint firstItem="jG8-Jw-l6k" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yur-xU-Djs"/>
+                <constraint firstItem="9d5-kf-iIk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="buO-GU-NK5"/>
+                <constraint firstAttribute="bottom" secondItem="jG8-Jw-l6k" secondAttribute="bottom" id="cAC-7H-T0V"/>
+                <constraint firstItem="9d5-kf-iIk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dji-Tf-tPf"/>
+                <constraint firstAttribute="trailing" secondItem="9d5-kf-iIk" secondAttribute="trailing" id="g5a-1C-dk0"/>
+                <constraint firstItem="jG8-Jw-l6k" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="goq-YM-LsJ"/>
+                <constraint firstAttribute="trailing" secondItem="jG8-Jw-l6k" secondAttribute="trailing" id="odm-jA-LWO"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <connections>
+                <outlet property="backgroundImage" destination="jG8-Jw-l6k" id="1TB-q0-1Sg"/>
+                <outlet property="button" destination="1Yh-8V-816" id="8sR-E3-4CQ"/>
+                <outlet property="destinationLabel" destination="YVh-yV-igN" id="xtb-iB-f1w"/>
+                <outlet property="effectsView" destination="9d5-kf-iIk" id="g1I-GR-4Kp"/>
+                <outlet property="priceLabel" destination="cIh-iv-N3b" id="xPn-Q7-j1t"/>
+            </connections>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,6 @@
+framework module Pods_FlightKit_Example {
+  umbrella header "Pods-FlightKit_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

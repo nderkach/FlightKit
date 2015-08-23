@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lJr-LT-qwm">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Flights-->
+        <scene sceneID="mj6-mr-6Is">
+            <objects>
+                <viewController id="rMT-f0-BRc" customClass="FirstViewController" customModule="FlightKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DYC-l8-BiL"/>
+                        <viewControllerLayoutGuide type="bottom" id="nHL-Y0-bE0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FFj-B8-7PO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Where to?" clearsOnBeginEditing="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XMS-2T-c8s" customClass="AirportTextField" customModule="FlightKit" customModuleProvider="target">
+                                <rect key="frame" x="16" y="64" width="568" height="88"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.98431372549019602" green="0.98431372549019602" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="88" id="G5p-U1-vmK"/>
+                                    <constraint firstAttribute="width" secondItem="XMS-2T-c8s" secondAttribute="height" multiplier="71:11" id="Jfc-RL-ggz"/>
+                                    <constraint firstAttribute="height" constant="88" id="c8R-Sb-zny"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Jfc-RL-ggz"/>
+                                        <exclude reference="c8R-Sb-zny"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="rMT-f0-BRc" id="Rr1-eb-5Fh"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-Ob-lN5">
+                                <rect key="frame" x="16" y="160" width="568" height="302"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKH-Cb-E8U" userLabel="C Header" customClass="CVCalendarMenuView" customModule="FlightKit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="2f4-0M-5Eo"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBM-Yp-TvZ" userLabel="C Body" customClass="CVCalendarView" customModule="FlightKit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="58" width="568" height="244"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="YBM-Yp-TvZ" firstAttribute="top" secondItem="TKH-Cb-E8U" secondAttribute="bottom" constant="8" id="22p-9L-weL"/>
+                                    <constraint firstAttribute="bottom" secondItem="TKH-Cb-E8U" secondAttribute="bottom" constant="252" id="9cS-36-3Ay"/>
+                                    <constraint firstItem="YBM-Yp-TvZ" firstAttribute="top" secondItem="cY3-Ob-lN5" secondAttribute="top" constant="58" id="9gw-Hz-PLa"/>
+                                    <constraint firstAttribute="trailing" secondItem="TKH-Cb-E8U" secondAttribute="trailing" id="Ac2-bj-a2i"/>
+                                    <constraint firstAttribute="trailing" secondItem="YBM-Yp-TvZ" secondAttribute="trailing" id="K9U-0V-g1a"/>
+                                    <constraint firstItem="TKH-Cb-E8U" firstAttribute="top" secondItem="cY3-Ob-lN5" secondAttribute="top" id="N0r-IV-c6I"/>
+                                    <constraint firstItem="YBM-Yp-TvZ" firstAttribute="top" secondItem="TKH-Cb-E8U" secondAttribute="bottom" constant="8" id="N11-0x-pw4"/>
+                                    <constraint firstItem="YBM-Yp-TvZ" firstAttribute="top" secondItem="TKH-Cb-E8U" secondAttribute="bottom" constant="8" id="RPh-kk-1G0"/>
+                                    <constraint firstItem="YBM-Yp-TvZ" firstAttribute="leading" secondItem="cY3-Ob-lN5" secondAttribute="leading" id="Zv8-rj-aVS"/>
+                                    <constraint firstItem="TKH-Cb-E8U" firstAttribute="leading" secondItem="cY3-Ob-lN5" secondAttribute="leading" id="kwJ-8u-yEK"/>
+                                    <constraint firstAttribute="bottom" secondItem="YBM-Yp-TvZ" secondAttribute="bottom" id="qP1-cr-gvt"/>
+                                    <constraint firstAttribute="height" constant="302" id="wmc-7b-tYm"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="9cS-36-3Ay"/>
+                                        <exclude reference="22p-9L-weL"/>
+                                        <exclude reference="9gw-Hz-PLa"/>
+                                        <exclude reference="RPh-kk-1G0"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLG-7C-NpC">
+                                <rect key="frame" x="16" y="520" width="568" height="66"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Rza-kW-EI7">
+                                    <rect key="frame" x="0.0" y="0.0" width="568" height="66"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="LyO-LK-ABk"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.43529411764705883" green="0.54117647058823526" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="XMS-2T-c8s" firstAttribute="trailing" secondItem="FFj-B8-7PO" secondAttribute="trailingMargin" id="6N6-0E-dhw"/>
+                            <constraint firstItem="dLG-7C-NpC" firstAttribute="trailing" secondItem="FFj-B8-7PO" secondAttribute="trailingMargin" id="6Rd-Pe-cKu"/>
+                            <constraint firstItem="dLG-7C-NpC" firstAttribute="leading" secondItem="FFj-B8-7PO" secondAttribute="leadingMargin" id="7Hn-dS-kH7"/>
+                            <constraint firstItem="cY3-Ob-lN5" firstAttribute="leading" secondItem="FFj-B8-7PO" secondAttribute="leadingMargin" id="9pV-CE-dCY"/>
+                            <constraint firstItem="cY3-Ob-lN5" firstAttribute="top" secondItem="XMS-2T-c8s" secondAttribute="bottom" constant="8" id="CVL-rz-U5S"/>
+                            <constraint firstItem="XMS-2T-c8s" firstAttribute="leading" secondItem="FFj-B8-7PO" secondAttribute="leadingMargin" id="UJz-ZD-q6o"/>
+                            <constraint firstItem="nHL-Y0-bE0" firstAttribute="top" secondItem="dLG-7C-NpC" secondAttribute="bottom" constant="14" id="a1u-p1-bt6"/>
+                            <constraint firstItem="cY3-Ob-lN5" firstAttribute="trailing" secondItem="FFj-B8-7PO" secondAttribute="trailingMargin" id="brq-8B-I2p"/>
+                            <constraint firstItem="XMS-2T-c8s" firstAttribute="top" secondItem="DYC-l8-BiL" secondAttribute="bottom" id="vsQ-UA-dRH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Flights" id="MAz-Ap-o75"/>
+                    <connections>
+                        <outlet property="calendarView" destination="YBM-Yp-TvZ" id="zvP-h9-zGJ"/>
+                        <outlet property="effectsView" destination="dLG-7C-NpC" id="jHh-dE-XNW"/>
+                        <outlet property="menuView" destination="TKH-Cb-E8U" id="c6i-Xh-Tvm"/>
+                        <outlet property="toTextField" destination="XMS-2T-c8s" id="8E1-Vb-d9z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="la7-1D-Owr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="653" y="-143"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cY8-6F-qt1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lJr-LT-qwm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2cT-Nb-Blc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.14117647059999999" green="0.1176470588" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rMT-f0-BRc" kind="relationship" relationship="rootViewController" id="OTR-o7-yjZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SiZ-2u-2NL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-159" y="-143"/>
+        </scene>
+    </scenes>
+</document>

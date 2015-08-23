@@ -1,0 +1,6 @@
+framework module FlightKit {
+  umbrella header "FlightKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
