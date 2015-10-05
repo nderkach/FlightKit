@@ -37,6 +37,5 @@ Pod::Spec.new do |s|
   s.dependency 'KeychainAccess'
   s.dependency 'Alamofire'
   s.dependency 'SwiftyJSON'
-  s.dependency 'RZVibrantButton'
   s.dependency 'SCLAlertView'
 end

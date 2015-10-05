@@ -8,43 +8,43 @@
 
 import UIKit
 
-typealias WeekView = CVCalendarWeekView
-typealias CalendarView = CVCalendarView
-typealias MonthView = CVCalendarMonthView
-typealias Manager = CVCalendarManager
-typealias DayView = CVCalendarDayView
-typealias ContentController = CVCalendarContentViewController
-typealias Appearance = CVCalendarViewAppearance
-typealias Coordinator = CVCalendarDayViewControlCoordinator
-typealias Date = CVDate
-typealias CalendarMode = CVCalendarViewPresentationMode
-typealias Weekday = CVCalendarWeekday
-typealias Animator = CVCalendarViewAnimator
-typealias Delegate = CVCalendarViewDelegate
-typealias AppearanceDelegate = CVCalendarViewAppearanceDelegate
-typealias AnimatorDelegate = CVCalendarViewAnimatorDelegate
-typealias ContentViewController = CVCalendarContentViewController
-typealias MonthContentViewController = CVCalendarMonthContentViewController
-typealias WeekContentViewController = CVCalendarWeekContentViewController
-typealias MenuViewDelegate = CVCalendarMenuViewDelegate
-typealias TouchController = CVCalendarTouchController
-typealias SelectionType = CVSelectionType
+public typealias WeekView = CVCalendarWeekView
+public typealias CalendarView = CVCalendarView
+public typealias MonthView = CVCalendarMonthView
+public typealias Manager = CVCalendarManager
+public typealias DayView = CVCalendarDayView
+public typealias ContentController = CVCalendarContentViewController
+public typealias Appearance = CVCalendarViewAppearance
+public typealias Coordinator = CVCalendarDayViewControlCoordinator
+public typealias Date = CVDate
+public typealias CalendarMode = CVCalendarViewPresentationMode
+public typealias Weekday = CVCalendarWeekday
+public typealias Animator = CVCalendarViewAnimator
+public typealias Delegate = CVCalendarViewDelegate
+public typealias AppearanceDelegate = CVCalendarViewAppearanceDelegate
+public typealias AnimatorDelegate = CVCalendarViewAnimatorDelegate
+public typealias ContentViewController = CVCalendarContentViewController
+public typealias MonthContentViewController = CVCalendarMonthContentViewController
+public typealias WeekContentViewController = CVCalendarWeekContentViewController
+public typealias MenuViewDelegate = CVCalendarMenuViewDelegate
+public typealias TouchController = CVCalendarTouchController
+public typealias SelectionType = CVSelectionType
 
-class CVCalendarView: UIView {
+public final class CVCalendarView: UIView {
     // MARK: - Public properties
-    var manager: Manager!
-    var appearance: Appearance!
-    var touchController: TouchController!
-    var coordinator: Coordinator!
-    var animator: Animator!
-    var contentController: ContentViewController!
-    var calendarMode: CalendarMode!
-    
-    var (weekViewSize: CGSize?, dayViewSize: CGSize?)
-    
+    public var manager: Manager!
+    public var appearance: Appearance!
+    public var touchController: TouchController!
+    public var coordinator: Coordinator!
+    public var animator: Animator!
+    public var contentController: ContentViewController!
+    public var calendarMode: CalendarMode!
+
+    public var (weekViewSize, dayViewSize):(CGSize?, CGSize?)
+
     private var validated = false
-    
-    var firstWeekday: Weekday {
+
+    public var firstWeekday: Weekday {
         get {
             if let delegate = delegate {
                 return delegate.firstWeekday()
@@ -53,111 +53,121 @@ class CVCalendarView: UIView {
             }
         }
     }
-    
-    var shouldShowWeekdaysOut: Bool! {
+
+    public var shouldShowWeekdaysOut: Bool! {
         if let delegate = delegate, let shouldShow = delegate.shouldShowWeekdaysOut?() {
             return shouldShow
         } else {
             return false
         }
     }
-    
-    var presentedDate: Date! {
+
+    public var presentedDate: Date! {
         didSet {
             if let oldValue = oldValue {
                 delegate?.presentedDateUpdated?(presentedDate)
             }
         }
     }
-    
+
+    public var shouldAnimateResizing: Bool {
+        get {
+            if let delegate = delegate, should = delegate.shouldAnimateResizing?() {
+                return should
+            }
+
+            return true
+        }
+    }
+
     // MARK: - Calendar View Delegate
-    
-    @IBOutlet weak var calendarDelegate: AnyObject? {
+
+    @IBOutlet public weak var calendarDelegate: AnyObject? {
         set {
             if let calendarDelegate = newValue as? Delegate {
                 delegate = calendarDelegate
             }
         }
-        
+
         get {
             return delegate
         }
     }
-    
-    var delegate: CVCalendarViewDelegate? {
+
+    public var delegate: CVCalendarViewDelegate? {
         didSet {
             if manager == nil {
                 manager = Manager(calendarView: self)
             }
-            
+
             if appearance == nil {
                 appearance = Appearance()
             }
-            
+
             if touchController == nil {
                 touchController = TouchController(calendarView: self)
             }
-            
+
             if coordinator == nil {
                 coordinator = Coordinator(calendarView: self)
             }
-            
+
             if animator == nil {
                 animator = Animator(calendarView: self)
             }
-            
+
             if calendarMode == nil {
                 loadCalendarMode()
             }
         }
     }
-    
+
     // MARK: - Calendar Appearance Delegate
-    
-    @IBOutlet weak var calendarAppearanceDelegate: AnyObject? {
+
+    @IBOutlet public weak var calendarAppearanceDelegate: AnyObject? {
         set {
             if let calendarAppearanceDelegate = newValue as? AppearanceDelegate {
                 if appearance == nil {
                     appearance = Appearance()
                 }
-                
+
                 appearance.delegate = calendarAppearanceDelegate
             }
         }
-        
+
         get {
             return appearance
         }
     }
-    
+
     // MARK: - Calendar Animator Delegate
-    
-    @IBOutlet weak var animatorDelegate: AnyObject? {
+
+    @IBOutlet public weak var animatorDelegate: AnyObject? {
         set {
             if let animatorDelegate = newValue as? AnimatorDelegate {
                 animator.delegate = animatorDelegate
             }
         }
-        
+
         get {
             return animator
         }
     }
-    
+
     // MARK: - Initialization
-    
-    init() {
+
+    public init() {
         super.init(frame: CGRectZero)
         hidden = true
     }
-    
-    override init(frame: CGRect) {
+
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         hidden = true
     }
 
     /// IB Initialization
-    required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         hidden = true
     }
@@ -166,19 +176,22 @@ class CVCalendarView: UIView {
 // MARK: - Frames update
 
 extension CVCalendarView {
-    func commitCalendarViewUpdate() {
+    public func commitCalendarViewUpdate() {
         if let delegate = delegate, let contentController = contentController {
             let contentViewSize = contentController.bounds.size
             let selfSize = bounds.size
-            
-            if !validated {
+            let screenSize = UIScreen.mainScreen().bounds.size
+
+            let allowed = selfSize.width <= screenSize.width && selfSize.height <= screenSize.height
+
+            if !validated && allowed {
                 let width = selfSize.width
                 let height: CGFloat
-                let countOfWeeks = CGFloat(5)
-                
+                let countOfWeeks = CGFloat(6)
+
                 let vSpace = appearance.spaceBetweenWeekViews!
                 let hSpace = appearance.spaceBetweenDayViews!
-                
+
                 if let mode = calendarMode {
                     switch mode {
                     case .WeekView:
@@ -186,11 +199,23 @@ extension CVCalendarView {
                     case .MonthView :
                         height = (selfSize.height / countOfWeeks) - (vSpace * countOfWeeks)
                     }
-                    
+
+                    // If no height constraint found we set it manually.
+                    var found = false
+                    for constraint in constraints {
+                        if constraint.firstAttribute == .Height {
+                            found = true
+                        }
+                    }
+
+                    if !found {
+                        addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 1, constant: frame.height))
+                    }
+
                     weekViewSize = CGSizeMake(width, height)
                     dayViewSize = CGSizeMake((width / 7.0) - hSpace, height)
                     validated = true
-                    
+
                     contentController.updateFrames(selfSize != contentViewSize ? bounds : CGRectZero)
                 }
             }
@@ -201,7 +226,7 @@ extension CVCalendarView {
 // MARK: - Coordinator callback
 
 extension CVCalendarView {
-    func didSelectDayView(dayView: CVCalendarDayView) {
+    public func didSelectDayView(dayView: CVCalendarDayView) {
         if let controller = contentController {
             presentedDate = dayView.date
             delegate?.didSelectDayView?(dayView)
@@ -213,30 +238,30 @@ extension CVCalendarView {
 // MARK: - Convenience API
 
 extension CVCalendarView {
-    func changeDaysOutShowingState(shouldShow: Bool) {
+    public func changeDaysOutShowingState(shouldShow: Bool) {
         contentController.updateDayViews(shouldShow)
     }
-    
-    func toggleViewWithDate(date: NSDate) {
+
+    public func toggleViewWithDate(date: NSDate) {
         contentController.togglePresentedDate(date)
     }
-    
-    func toggleCurrentDayView() {
+
+    public func toggleCurrentDayView() {
         contentController.togglePresentedDate(NSDate())
     }
-    
-    func loadNextView() {
+
+    public func loadNextView() {
         contentController.presentNextView(nil)
     }
-    
-    func loadPreviousView() {
+
+    public func loadPreviousView() {
         contentController.presentPreviousView(nil)
     }
-    
-    func changeMode(mode: CalendarMode) {
+
+    public func changeMode(mode: CalendarMode) {
         if let selectedDate = coordinator.selectedDayView?.date.convertedDate() where calendarMode != mode {
             calendarMode = mode
-            
+
             let newController: ContentController
             switch mode {
             case .WeekView:
@@ -246,12 +271,12 @@ extension CVCalendarView {
                 contentController.updateHeight(contentController.presentedMonthView.potentialSize.height, animated: true)
                 newController = MonthContentViewController(calendarView: self, frame: bounds, presentedDate: selectedDate)
             }
-            
-            
+
+
             newController.updateFrames(bounds)
             newController.scrollView.alpha = 0
             addSubview(newController.scrollView)
-            
+
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.contentController.scrollView.alpha = 0
                 newController.scrollView.alpha = 1
@@ -264,7 +289,7 @@ extension CVCalendarView {
     }
 }
 
-// MARK: - Mode load 
+// MARK: - Mode load
 
 private extension CVCalendarView {
     func loadCalendarMode() {
@@ -275,7 +300,7 @@ private extension CVCalendarView {
                 case .WeekView: contentController = WeekContentViewController(calendarView: self, frame: bounds)
                 default: break
             }
-            
+
             addSubview(contentController.scrollView)
         }
     }

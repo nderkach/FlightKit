@@ -55,7 +55,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods-FlightKit_Example/Alamofire.framework'
   install_framework 'Pods-FlightKit_Example/FlightKit.framework'
   install_framework 'Pods-FlightKit_Example/KeychainAccess.framework'
-  install_framework 'Pods-FlightKit_Example/RZVibrantButton.framework'
   install_framework 'Pods-FlightKit_Example/SCLAlertView.framework'
   install_framework 'Pods-FlightKit_Example/SwiftyJSON.framework'
 fi
@@ -63,7 +62,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods-FlightKit_Example/Alamofire.framework'
   install_framework 'Pods-FlightKit_Example/FlightKit.framework'
   install_framework 'Pods-FlightKit_Example/KeychainAccess.framework'
-  install_framework 'Pods-FlightKit_Example/RZVibrantButton.framework'
   install_framework 'Pods-FlightKit_Example/SCLAlertView.framework'
   install_framework 'Pods-FlightKit_Example/SwiftyJSON.framework'
 fi

@@ -17,9 +17,9 @@ extension UIImageView {
         if let url = NSURL(string: urlString) {
             let request = NSURLRequest(URL: url)
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
-                (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+                (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
                 UIView.transitionWithView(self, duration: 1.0, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
-                    self.image = UIImage(data: data)
+                    self.image = UIImage(data: data!)
                 }, completion: nil)
             }
         }
@@ -47,7 +47,7 @@ public class FlightKit {
     }
     
     public class func initView(from: String, to: String, label: String?, sview:UIView) {
-        var view:FlightView = loadFromNibNamed("FromView", bundle:bundle()) as! FlightView;
+        let view:FlightView = loadFromNibNamed("FromView", bundle:bundle()) as! FlightView;
         view.backgroundImage.image = UIImage(named: "weird_plane", inBundle: bundle(), compatibleWithTraitCollection: nil)
         view.setImageForAirport(to);
         view.requestMinPrice(from, destination: to, fromDate: NSDate(), toDate: NSDate().dateByAddingTimeInterval(30*86400))
@@ -75,9 +75,9 @@ public class FlightView: UIView {
     @IBAction func buttonPushed(sender: UIButton) {
         let alertView = SCLAlertView()
         
-        let txt = alertView.addTextField(title: "Enter your email")
+        let txt = alertView.addTextField("Enter your email")
         alertView.addButton("Let me know") {
-            println("let me know: \(txt.text!)")
+            print("let me know: \(txt.text!)")
             
             SCLAlertView().showSuccess(
                 "Cool, we'll let you know",
@@ -87,7 +87,7 @@ public class FlightView: UIView {
         }
         
         alertView.addButton("Book now") {
-            println("book now")
+            print("book now")
         }
 
         alertView.showCloseButton = false
@@ -112,21 +112,21 @@ public class FlightView: UIView {
         let parameters = ["grant_type": "client_credentials"]
         
         Alamofire.request(.POST, "https://api.test.sabre.com/v2/auth/token", headers: headers, parameters:parameters)
-            .responseJSON { (request, response, data, error) in
-                if (error != nil || JSON(data!)["error"] != nil) {
-                    println(error)
-                    println(JSON(data!)["error_description"])
+            .responseJSON { (_, _, data) in
+                if (data.isFailure) {
+                    if let error = data.value {
+                        print(JSON(error)["error_description"])
+                    }
                     completion()
                 } else {
-                    var json = JSON(data!)
-                    println(json)
+                    let json = JSON(data.value!)
                     self.oauthToken = json["access_token"].string
                     completion()
-                    println(self.oauthToken)
+                    print(self.oauthToken)
                     let expTime = json["expires_in"].double
-                    var expDate: NSDate = NSDate().dateByAddingTimeInterval(expTime!)
-                    println(expDate)
-                    var data = NSKeyedArchiver.archivedDataWithRootObject(["value": self.oauthToken, "expirationDate": expDate])
+                    let expDate: NSDate = NSDate().dateByAddingTimeInterval(expTime!)
+                    print(expDate)
+                    let data = NSKeyedArchiver.archivedDataWithRootObject(["value": self.oauthToken, "expirationDate": expDate])
                     
                     self.keychain[data: "token"] = data
                 }
@@ -134,7 +134,7 @@ public class FlightView: UIView {
     }
     
     func obtainSabreToken(completion: () -> Void) -> Void {
-        var token = keychain[data: "token"] as NSData?
+        let token = keychain[data: "token"] as NSData?
         if token == nil {
             requestSabreToken() {
                 completion()
@@ -185,13 +185,12 @@ public class FlightView: UIView {
             
             let parameters = json!.object as! [String: AnyObject]
             
-            println("jsonData:\(json!)")
+            print("jsonData:\(json!)")
             
             Alamofire.request(.POST, url, headers: headers, parameters:parameters, encoding: .JSON)
-                .responseJSON { (request, response, data, error) in
-                    var json = JSON(data!)
-                    let price = json["OTA_AirLowFareSearchRS"]["PricedItineraries"]["PricedItinerary"][0]["AirItineraryPricingInfo"][0]["ItinTotalFare"]["TotalFare"]["Amount"].int
-                    println(price)
+                .responseJSON { (_, _, json) in
+                    let price = JSON(json.value!)["OTA_AirLowFareSearchRS"]["PricedItineraries"]["PricedItinerary"][0]["AirItineraryPricingInfo"][0]["ItinTotalFare"]["TotalFare"]["Amount"].int
+                    print(price)
                     
                     if let p = price {
                         self.priceLabel.text = "Starting at $\(p)"
@@ -220,6 +219,6 @@ public class FlightView: UIView {
     }
     
     public func setImageForAirport(airport: String) {
-        backgroundImage.imageFromUrl("http://media.expedia.com/mobiata/mobile/apps/ExpediaBooking/FlightDestinations/images/\(airport).jpg")
+        backgroundImage.imageFromUrl("https://media.expedia.com/mobiata/mobile/apps/ExpediaBooking/FlightDestinations/images/\(airport).jpg")
     }
 }

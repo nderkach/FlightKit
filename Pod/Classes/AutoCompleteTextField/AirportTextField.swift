@@ -66,7 +66,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     }
     
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     public override func awakeFromNib() {
@@ -77,7 +77,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        for view in subviews as! [UIView] {
+        for view in subviews {
             if view is UIButton {
                 let button = view as! UIButton
                 if let uiImage = button.imageForState(.Highlighted) {
@@ -96,10 +96,10 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         
         UIGraphicsBeginImageContextWithOptions(size, false, 2)
         let context = UIGraphicsGetCurrentContext()
-        image.drawAtPoint(CGPointZero, blendMode: kCGBlendModeNormal, alpha: 1.0)
+        image.drawAtPoint(CGPointZero, blendMode: .Normal, alpha: 1.0)
         
         CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextSetBlendMode(context, kCGBlendModeSourceIn)
+        CGContextSetBlendMode(context, .SourceIn)
         CGContextSetAlpha(context, 1.0)
         
         let rect = CGRectMake(
@@ -145,6 +145,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         tableView.hidden = hidesWhenEmpty ?? true
         tableView.backgroundColor = FlightColors.presqueWhite.colorWithAlphaComponent(0.1)
         tableView.scrollEnabled = false
+        tableView.tableFooterView = UIView(frame: CGRectZero)
         view.addSubview(tableView)
         autoCompleteTableView = tableView
         
@@ -155,6 +156,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         if autoCompleteTableView != nil{
             var newFrame = autoCompleteTableView!.frame
             newFrame.size.height = autoCompleteTableHeight!
+            
             autoCompleteTableView!.frame = newFrame
         }
     }
@@ -170,7 +172,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "autocompleteCellIdentifier"
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
         if cell == nil{
             cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
         }
@@ -229,7 +231,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
                 for i in 0..<autoCompleteStrings!.count{
                     let str = autoCompleteStrings![i] as NSString
                     let range = str.rangeOfString(text!, options: .CaseInsensitiveSearch)
-                    var attString = NSMutableAttributedString(string: autoCompleteStrings![i], attributes: attrs)
+                    let attString = NSMutableAttributedString(string: autoCompleteStrings![i], attributes: attrs)
                     attString.addAttributes(autoCompleteAttributes!, range: range)
                     attributedAutoCompleteStrings?.append(attString)
                 }
@@ -237,7 +239,11 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         }
         
         if let ac = autoCompleteStrings {
-            autoCompleteTableHeight = CGFloat(ac.count) * autoCompleteCellHeight
+            if (ac.count < 3) {
+                autoCompleteTableHeight = CGFloat(ac.count) * autoCompleteCellHeight
+            } else {
+                autoCompleteTableHeight = CGFloat(maximumAutoCompleteCount) * autoCompleteCellHeight
+            }
         } else {
             autoCompleteTableHeight = 0
         }
@@ -247,7 +253,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     
     //MARK: - Internal
     func textFieldDidChange(){
-        if let t = text {
+        if let _ = text {
             onTextChange(text!)
         }
         if text!.isEmpty{ autoCompleteStrings = nil }
@@ -300,7 +306,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         let frame = CGRect(origin: CGPointZero, size: CGSize(width: rect.size.width, height: rect.size.height))
         
         placeholderLabel.frame = CGRectInset(frame, placeholderInsets.x, placeholderInsets.y)
-        placeholderLabel.font = placeholderFontFromFont(self.font)
+        placeholderLabel.font = placeholderFontFromFont(self.font!)
         
         updateBorder()
         updatePlaceholder()
@@ -327,7 +333,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
         placeholderLabel.sizeToFit()
         layoutPlaceholderInTextRect()
         
-        if isFirstResponder() || !text.isEmpty {
+        if isFirstResponder() || !text!.isEmpty {
             animateViewsForTextEntry()
         }
     }
@@ -363,7 +369,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     func animateViewsForTextEntry() {
         UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1.0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: ({ [unowned self] in
             
-            if self.text.isEmpty {
+            if self.text!.isEmpty {
                 self.placeholderLabel.frame.origin = CGPoint(x: 10, y: self.placeholderLabel.frame.origin.y)
                 self.placeholderLabel.alpha = 0
             }
@@ -382,7 +388,7 @@ public class AirportTextField: UITextField, UITableViewDataSource, UITableViewDe
     }
     
     func animateViewsForTextDisplay() {
-        if text.isEmpty {
+        if text!.isEmpty {
             UIView.animateWithDuration(0.35, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 2.0, options: UIViewAnimationOptions.BeginFromCurrentState, animations: ({ [unowned self] in
                 self.layoutPlaceholderInTextRect()
                 self.placeholderLabel.alpha = 1

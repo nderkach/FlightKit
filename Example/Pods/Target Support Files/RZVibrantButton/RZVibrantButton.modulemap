@@ -1,6 +1,0 @@
-framework module RZVibrantButton {
-  umbrella header "RZVibrantButton-umbrella.h"
-
-  export *
-  module * { export * }
-}

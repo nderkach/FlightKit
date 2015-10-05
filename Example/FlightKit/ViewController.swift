@@ -22,13 +22,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         let nextStoryBoard = FlightKit.storyboard();
-        nextVc = nextStoryBoard!.instantiateInitialViewController() as! UIViewController
+        nextVc = nextStoryBoard!.instantiateInitialViewController()
         
-        FlightKit.initView("SFO", to: "LAX", label:"Fly to San Francisco", sview:self.innerView);
+//        FlightKit.initView("SFO", to: "LAX", label:"Fly to San Francisco", sview:self.innerView);
     }
     
     override func viewDidAppear(animated: Bool) {
-//        pushMain()
+        pushMain()
     }
 
     override func didReceiveMemoryWarning() {

@@ -8,43 +8,43 @@
 
 import UIKit
 
-typealias Identifier = String
-class CVCalendarContentViewController: UIViewController {
+public typealias Identifier = String
+public class CVCalendarContentViewController: UIViewController {
     // MARK: - Constants
-    let Previous = "Previous"
-    let Presented = "Presented"
-    let Following = "Following"
-    
+    public let Previous = "Previous"
+    public let Presented = "Presented"
+    public let Following = "Following"
+
     // MARK: - Public Properties
-    let calendarView: CalendarView
-    let scrollView: UIScrollView
-    
-    var presentedMonthView: MonthView
-    
-    var bounds: CGRect {
+    public let calendarView: CalendarView
+    public let scrollView: UIScrollView
+
+    public var presentedMonthView: MonthView
+
+    public var bounds: CGRect {
         return scrollView.bounds
     }
-    
-    var currentPage = 1
-    var pageChanged: Bool {
+
+    public var currentPage = 1
+    public var pageChanged: Bool {
         get {
             return currentPage == 1 ? false : true
         }
     }
-    
-    var pageLoadingEnabled = true
-    var presentationEnabled = true
-    var lastContentOffset: CGFloat = 0
-    var direction: CVScrollDirection = .None
-    
-    init(calendarView: CalendarView, frame: CGRect) {
+
+    public var pageLoadingEnabled = true
+    public var presentationEnabled = true
+    public var lastContentOffset: CGFloat = 0
+    public var direction: CVScrollDirection = .None
+
+    public init(calendarView: CalendarView, frame: CGRect) {
         self.calendarView = calendarView
         scrollView = UIScrollView(frame: frame)
         presentedMonthView = MonthView(calendarView: calendarView, date: NSDate())
         presentedMonthView.updateAppearance(frame)
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         scrollView.contentSize = CGSizeMake(frame.width * 3, frame.height)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -52,8 +52,8 @@ class CVCalendarContentViewController: UIViewController {
         scrollView.pagingEnabled = true
         scrollView.delegate = self
     }
-    
-    required init(coder aDecoder: NSCoder) {
+
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -61,13 +61,13 @@ class CVCalendarContentViewController: UIViewController {
 // MARK: - UI Refresh
 
 extension CVCalendarContentViewController {
-    func updateFrames(frame: CGRect) {
+    public func updateFrames(frame: CGRect) {
         if frame != CGRectZero {
             scrollView.frame = frame
             scrollView.removeAllSubviews()
             scrollView.contentSize = CGSizeMake(frame.size.width * 3, frame.size.height)
         }
-        
+
         calendarView.hidden = false
     }
 }
@@ -79,21 +79,21 @@ extension CVCalendarContentViewController: UIScrollViewDelegate { }
 
 /// Convenience API.
 extension CVCalendarContentViewController {
-    func performedDayViewSelection(dayView: DayView) { }
-    
-    func togglePresentedDate(date: NSDate) { }
-    
-    func presentNextView(view: UIView?) { }
-    
-    func presentPreviousView(view: UIView?) { }
-    
-    func updateDayViews(hidden: Bool) { }
+    public func performedDayViewSelection(dayView: DayView) { }
+
+    public func togglePresentedDate(date: NSDate) { }
+
+    public func presentNextView(view: UIView?) { }
+
+    public func presentPreviousView(view: UIView?) { }
+
+    public func updateDayViews(hidden: Bool) { }
 }
 
 // MARK: - Contsant conversion
 
 extension CVCalendarContentViewController {
-    func indexOfIdentifier(identifier: Identifier) -> Int {
+    public func indexOfIdentifier(identifier: Identifier) -> Int {
         let index: Int
         switch identifier {
         case Previous: index = 0
@@ -101,7 +101,7 @@ extension CVCalendarContentViewController {
         case Following: index = 2
         default: index = -1
         }
-        
+
         return index
     }
 }
@@ -109,37 +109,37 @@ extension CVCalendarContentViewController {
 // MARK: - Date management
 
 extension CVCalendarContentViewController {
-    func dateBeforeDate(date: NSDate) -> NSDate {
+    public func dateBeforeDate(date: NSDate) -> NSDate {
         let components = Manager.componentsForDate(date)
         let calendar = NSCalendar.currentCalendar()
-        
+
         components.month -= 1
-        
+
         let dateBefore = calendar.dateFromComponents(components)!
-        
+
         return dateBefore
     }
-    
-    func dateAfterDate(date: NSDate) -> NSDate {
+
+    public func dateAfterDate(date: NSDate) -> NSDate {
         let components = Manager.componentsForDate(date)
         let calendar = NSCalendar.currentCalendar()
-        
+
         components.month += 1
-        
+
         let dateAfter = calendar.dateFromComponents(components)!
-        
+
         return dateAfter
     }
-    
-    func matchedMonths(lhs: Date, _ rhs: Date) -> Bool {
+
+    public func matchedMonths(lhs: Date, _ rhs: Date) -> Bool {
         return lhs.year == rhs.year && lhs.month == rhs.month
     }
-    
-    func matchedWeeks(lhs: Date, _ rhs: Date) -> Bool {
+
+    public func matchedWeeks(lhs: Date, _ rhs: Date) -> Bool {
         return (lhs.year == rhs.year && lhs.month == rhs.month && lhs.week == rhs.week)
     }
-    
-    func matchedDays(lhs: Date, _ rhs: Date) -> Bool {
+
+    public func matchedDays(lhs: Date, _ rhs: Date) -> Bool {
         return (lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day)
     }
 }
@@ -148,52 +148,60 @@ extension CVCalendarContentViewController {
 
 extension CVCalendarContentViewController {
     private func layoutViews(views: [UIView], toHeight height: CGFloat) {
-        self.scrollView.frame.size.height = height
-        self.calendarView.layoutIfNeeded()
-        
-        for view in views {
+        scrollView.frame.size.height = height
+
+        var superStack = [UIView]()
+        var currentView: UIView = calendarView
+        while let currentSuperview = currentView.superview where !(currentSuperview is UIWindow) {
+            superStack += [currentSuperview]
+            currentView = currentSuperview
+        }
+
+        for view in views + superStack {
             view.layoutIfNeeded()
         }
     }
-    
-    func updateHeight(height: CGFloat, animated: Bool) {
-        var viewsToLayout = [UIView]()
-        if let calendarSuperview = calendarView.superview {
-            for constraintIn in calendarSuperview.constraints() {
-                if let constraint = constraintIn as? NSLayoutConstraint {
-                    if let firstItem = constraint.firstItem as? UIView, let secondItem = constraint.secondItem as? CalendarView {
-                        viewsToLayout.append(firstItem)
+
+    public func updateHeight(height: CGFloat, animated: Bool) {
+        if calendarView.shouldAnimateResizing {
+            var viewsToLayout = [UIView]()
+            if let calendarSuperview = calendarView.superview {
+                for constraintIn in calendarSuperview.constraints {
+                    if let constraint = constraintIn as? NSLayoutConstraint {
+                        if let firstItem = constraint.firstItem as? UIView, let secondItem = constraint.secondItem as? CalendarView {
+
+                            viewsToLayout.append(firstItem)
+                        }
                     }
                 }
             }
-        }
-        
-        
-        
-        for constraintIn in calendarView.constraints() {
-            if let constraint = constraintIn as? NSLayoutConstraint where constraint.firstAttribute == NSLayoutAttribute.Height {
-                calendarView.layoutIfNeeded()
-                constraint.constant = height
-                if animated {
-                    UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
-                        self.layoutViews(viewsToLayout, toHeight: height)
-                        }) { _ in
-                            self.presentedMonthView.frame.size = self.presentedMonthView.potentialSize
-                            self.presentedMonthView.updateInteractiveView()
+
+
+            for constraintIn in calendarView.constraints {
+                if let constraint = constraintIn as? NSLayoutConstraint where constraint.firstAttribute == NSLayoutAttribute.Height {
+                    constraint.constant = height
+
+                    if animated {
+                        UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                            self.layoutViews(viewsToLayout, toHeight: height)
+                            }) { _ in
+                                self.presentedMonthView.frame.size = self.presentedMonthView.potentialSize
+                                self.presentedMonthView.updateInteractiveView()
+                        }
+                    } else {
+                        layoutViews(viewsToLayout, toHeight: height)
+                        presentedMonthView.updateInteractiveView()
+                        presentedMonthView.frame.size = presentedMonthView.potentialSize
+                        presentedMonthView.updateInteractiveView()
                     }
-                } else {
-                    layoutViews(viewsToLayout, toHeight: height)
-                    presentedMonthView.updateInteractiveView()
-                    presentedMonthView.frame.size = presentedMonthView.potentialSize
-                    presentedMonthView.updateInteractiveView()
+
+                    break
                 }
-                
-                break
             }
         }
     }
-    
-    func updateLayoutIfNeeded() {
+
+    public func updateLayoutIfNeeded() {
         if presentedMonthView.potentialSize.height != scrollView.bounds.height {
             updateHeight(presentedMonthView.potentialSize.height, animated: true)
         } else if presentedMonthView.frame.size != scrollView.frame.size {
@@ -204,7 +212,7 @@ extension CVCalendarContentViewController {
 }
 
 extension UIView {
-    func removeAllSubviews() {
+    public func removeAllSubviews() {
         for subview in subviews {
             if let view = subview as? UIView {
                 view.removeFromSuperview()
