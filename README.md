@@ -1,4 +1,4 @@
-# FlightKit aka "Flight booking for developers" &copy; aka "Flight booking which doesn't suck" &copy;
+![Hassle](https://raw.githubusercontent.com/nderkach/FlightKit/master/hassle.png)
 
 This is a very early version (pretty much useless at this point) of a white-label framework for flight booking.
 
